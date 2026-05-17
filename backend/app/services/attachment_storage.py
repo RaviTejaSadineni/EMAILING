@@ -37,4 +37,4 @@ class AttachmentStorageService:
             async with aiofiles.open(absolute_path, "wb") as handle:
                 await handle.write(content)
 
-        return str(relative_path)
+        return relative_path.as_posix()

@@ -117,14 +117,14 @@ class AIService:
         system_prompt: str,
         user_prompt: str,
         temperature: float = 0.1,
-        max_tokens: int = 4096,
+        max_completion_tokens: int = 4096,
         response_format: str = "json",
     ) -> dict:
         cache_payload = {
             "system": system_prompt,
             "user": user_prompt,
             "temperature": temperature,
-            "max_tokens": max_tokens,
+            "max_completion_tokens": max_completion_tokens,
             "response_format": response_format,
             "model": self.deployment,
         }
@@ -134,8 +134,8 @@ class AIService:
             return cached
 
         estimated_tokens = self.estimate_tokens(system_prompt, user_prompt)
-        if estimated_tokens + max_tokens > self.context_window:
-            user_prompt = user_prompt[: (self.context_window - max_tokens) * 4]
+        if estimated_tokens + max_completion_tokens > self.context_window:
+            user_prompt = user_prompt[: (self.context_window - max_completion_tokens) * 4]
             estimated_tokens = self.estimate_tokens(system_prompt, user_prompt)
 
         await self.limiter.acquire(estimated_tokens)
@@ -147,7 +147,7 @@ class AIService:
                 {"role": "user", "content": user_prompt},
             ],
             "temperature": temperature,
-            "max_tokens": max_tokens,
+            "max_completion_tokens": max_completion_tokens,
             "timeout": 45,
         }
         if response_format == "json":
@@ -171,7 +171,7 @@ class AIService:
             system_prompt=system_prompt,
             user_prompt=f"Process all items and return JSON array under 'items'.\n{numbered}",
             temperature=temperature,
-            max_tokens=4096,
+            max_completion_tokens=4096,
             response_format="json",
         )
         items = payload.get("items") if isinstance(payload, dict) else None
@@ -188,17 +188,17 @@ class AIService:
         return await self.batch_complete(THREAD_MERGE_PROMPT, prompts)
 
     async def extract_contract_metadata(self, thread_data: dict) -> dict:
-        return await self.complete(CONTRACT_EXTRACTION_PROMPT, json.dumps(thread_data, default=str), max_tokens=2000)
+        return await self.complete(CONTRACT_EXTRACTION_PROMPT, json.dumps(thread_data, default=str), max_completion_tokens=2000)
 
     async def extract_stakeholder_info(self, emails: list[dict]) -> list[dict]:
         prompts = [json.dumps(item, default=str) for item in emails]
         return await self.batch_complete(STAKEHOLDER_EXTRACTION_PROMPT, prompts)
 
     async def detect_lifecycle_stage(self, thread_data: dict) -> dict:
-        return await self.complete(LIFECYCLE_STAGE_PROMPT, json.dumps(thread_data, default=str), max_tokens=2000)
+        return await self.complete(LIFECYCLE_STAGE_PROMPT, json.dumps(thread_data, default=str), max_completion_tokens=2000)
 
     async def generate_summary(self, text: str) -> str:
-        result = await self.complete(EMAIL_SUMMARY_PROMPT, text, max_tokens=500)
+        result = await self.complete(EMAIL_SUMMARY_PROMPT, text, max_completion_tokens=500)
         return str(result.get("summary", ""))
 
 
