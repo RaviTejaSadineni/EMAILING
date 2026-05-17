@@ -2,8 +2,8 @@ import { NavLink } from 'react-router-dom'
 import { ROUTES } from '../utils/constants'
 
 const navItems = [
-  { label: 'Dashboard', to: ROUTES.DASHBOARD },
-  { label: 'Import', to: ROUTES.IMPORT },
+  { label: 'Dashboard', to: ROUTES.DASHBOARD, icon: '📊' },
+  { label: 'Import', to: ROUTES.IMPORT, icon: '📥' },
 ]
 
 export default function Sidebar() {
@@ -19,6 +19,9 @@ export default function Sidebar() {
               `block rounded-lg px-3 py-2 transition ${isActive ? 'bg-electric/30 text-white' : 'text-white/75 hover:bg-white/10'}`
             }
           >
+            <span className="mr-2" aria-hidden>
+              {item.icon}
+            </span>
             {item.label}
           </NavLink>
         ))}

@@ -14,6 +14,7 @@ class ImportStatus(str, Enum):
     processing = "processing"
     completed = "completed"
     failed = "failed"
+    cancelled = "cancelled"
 
 
 class ImportJob(Base):
@@ -30,3 +31,5 @@ class ImportJob(Base):
     started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     error_message: Mapped[str | None] = mapped_column(Text, nullable=True)
+    resume_offset: Mapped[int] = mapped_column(Integer, default=0)
+    upload_path: Mapped[str | None] = mapped_column(String(1024), nullable=True)

@@ -21,6 +21,8 @@ class Email(Base):
     date: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), index=True, nullable=True)
     body_text: Mapped[str | None] = mapped_column(Text, nullable=True)
     body_html: Mapped[str | None] = mapped_column(Text, nullable=True)
+    in_reply_to: Mapped[str | None] = mapped_column(String(500), nullable=True, index=True)
+    references: Mapped[list[str]] = mapped_column(JSON, default=list)
     headers: Mapped[dict] = mapped_column(JSON, default=dict)
     raw_size: Mapped[int] = mapped_column(default=0)
     import_batch_id: Mapped[UUID | None] = mapped_column(Uuid, nullable=True, index=True)

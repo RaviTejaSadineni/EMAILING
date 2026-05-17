@@ -86,3 +86,16 @@ alembic history
 - Health: `GET /health`, `GET /health/db`, `GET /health/redis`
 - Imports: `POST /imports/upload`, `GET /imports/jobs`, `GET /imports/jobs/{id}`
 - WebSocket: `WS /ws/progress/{job_id}`
+
+## Step 2/3 Setup
+
+```bash
+cd backend
+alembic upgrade head
+pytest tests/ -v
+
+cd ../frontend
+npm install
+npm install three @react-three/fiber @react-three/drei framer-motion react-circular-progressbar
+npm run dev
+```
