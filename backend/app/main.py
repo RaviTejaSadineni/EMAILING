@@ -5,7 +5,22 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_settings
 from app.redis_client import close_redis_client, get_redis_client
-from app.routers import auth, classification, contracts, health, imports, lifecycle, stakeholders, threads, ws
+from app.routers import (
+    advanced_analytics,
+    auth,
+    classification,
+    contract_analytics,
+    contracts,
+    dashboard,
+    health,
+    imports,
+    lifecycle,
+    search,
+    stakeholder_analytics,
+    stakeholders,
+    threads,
+    ws,
+)
 
 settings = get_settings()
 
@@ -40,3 +55,8 @@ app.include_router(threads.router)
 app.include_router(contracts.router)
 app.include_router(stakeholders.router)
 app.include_router(lifecycle.router)
+app.include_router(contract_analytics.router)
+app.include_router(stakeholder_analytics.router)
+app.include_router(dashboard.router)
+app.include_router(advanced_analytics.router)
+app.include_router(search.router)

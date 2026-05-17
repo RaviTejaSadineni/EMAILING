@@ -7,6 +7,7 @@ from app.models.email_thread import EmailThread
 from app.models.email_thread_link import EmailThreadLink
 from app.models.import_job import ImportJob
 from app.models.processing_job import ProcessingJob
+from app.models.saved_filter import SavedFilter
 from app.models.stakeholder import Stakeholder
 from app.models.user import User
 
@@ -22,4 +23,5 @@ __all__ = [
     "ImportJob",
     "ProcessingJob",
     "AnalyticsCache",
+    "SavedFilter",
 ]
