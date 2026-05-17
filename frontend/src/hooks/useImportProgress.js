@@ -21,7 +21,7 @@ export function useImportProgress(jobId) {
 
   useEffect(() => {
     if (!jobId) {
-      return undefined
+      return
     }
 
     let cancelled = false

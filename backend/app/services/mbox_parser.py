@@ -149,7 +149,13 @@ class MboxParser:
                 body_text, body_html, attachments = _extract_body_and_attachments(message)
                 references = (message.get("References") or "").split()
                 headers = {k: _decode_header_value(v) or "" for k, v in message.items()}
-                if not headers and not from_address and not to_addresses and not subject and not attachments:
+                if self._is_effectively_empty_email(
+                    headers=headers,
+                    from_address=from_address,
+                    to_addresses=to_addresses,
+                    subject=subject,
+                    attachments=attachments,
+                ):
                     continue
 
                 yield ParsedEmail(
@@ -170,3 +176,14 @@ class MboxParser:
                 )
             except Exception:
                 continue
+
+    @staticmethod
+    def _is_effectively_empty_email(
+        *,
+        headers: dict[str, str],
+        from_address: str,
+        to_addresses: list[str],
+        subject: str | None,
+        attachments: list[ParsedAttachment],
+    ) -> bool:
+        return not headers and not from_address and not to_addresses and not subject and not attachments

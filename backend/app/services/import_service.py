@@ -63,7 +63,7 @@ async def run_import_job(job_id: UUID, session_factory: async_sessionmaker[Async
             processed = job.resume_offset
             batch_number = 0
 
-            def flush_batches():
+            def next_batch_number() -> int | None:
                 nonlocal processed, processed_attachments, batch_number
                 if not email_batch:
                     return None
@@ -100,7 +100,7 @@ async def run_import_job(job_id: UUID, session_factory: async_sessionmaker[Async
                 if len(email_batch) < batch_size:
                     continue
 
-                current_batch = flush_batches()
+                current_batch = next_batch_number()
                 if current_batch is None:
                     continue
 
@@ -166,7 +166,7 @@ async def run_import_job(job_id: UUID, session_factory: async_sessionmaker[Async
                 attachment_batch = []
 
             if email_batch:
-                current_batch = flush_batches()
+                current_batch = next_batch_number()
                 if current_batch is not None:
                     email_insert = insert(Email).returning(Email.id, Email.subject).values(email_batch)
                     insert_result = await db.execute(email_insert)
@@ -220,7 +220,7 @@ async def run_import_job(job_id: UUID, session_factory: async_sessionmaker[Async
                     "total_emails": job.total_emails,
                     "processed_emails": job.processed_emails,
                     "total_attachments": job.total_attachments,
-                    "processed_attachments": job.total_attachments,
+                    "processed_attachments": processed_attachments,
                     "current_batch": None,
                     "emails_per_second": 0,
                     "estimated_remaining_seconds": 0,
@@ -241,7 +241,7 @@ async def run_import_job(job_id: UUID, session_factory: async_sessionmaker[Async
                     "total_emails": job.total_emails,
                     "processed_emails": job.processed_emails,
                     "total_attachments": job.total_attachments,
-                    "processed_attachments": job.total_attachments,
+                    "processed_attachments": processed_attachments,
                     "current_batch": None,
                     "emails_per_second": 0,
                     "estimated_remaining_seconds": 0,
