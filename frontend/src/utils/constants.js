@@ -5,6 +5,11 @@ export const ROUTES = {
   REGISTER: '/register',
   DASHBOARD: '/',
   IMPORT: '/import',
+  PROCESSING: '/processing',
+  CONTRACTS: '/contracts',
+  STAKEHOLDERS: '/stakeholders',
+  EMAILS: '/emails',
+  ANALYTICS: '/analytics',
 }
 
 export const CONTRACT_STAGES = [

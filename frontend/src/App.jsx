@@ -4,6 +4,8 @@ import ProtectedRoute from './components/ProtectedRoute'
 import Dashboard from './pages/Dashboard'
 import ImportPage from './pages/Import'
 import Login from './pages/Login'
+import PlaceholderPage from './pages/Placeholder'
+import ProcessingPage from './pages/Processing'
 import Register from './pages/Register'
 import { ROUTES } from './utils/constants'
 
@@ -28,6 +30,56 @@ export default function App() {
           <ProtectedRoute>
             <Layout>
               <ImportPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path={ROUTES.PROCESSING}
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <ProcessingPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path={ROUTES.CONTRACTS}
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <PlaceholderPage title="Contracts" />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path={ROUTES.STAKEHOLDERS}
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <PlaceholderPage title="Stakeholders" />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path={ROUTES.EMAILS}
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <PlaceholderPage title="Emails" />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path={ROUTES.ANALYTICS}
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <PlaceholderPage title="Analytics" />
             </Layout>
           </ProtectedRoute>
         }
