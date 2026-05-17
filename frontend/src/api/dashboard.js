@@ -69,3 +69,38 @@ export async function fetchCycleTimeDistribution() {
   const { data } = await apiClient.get('/api/analytics/contracts/cycle-time-distribution')
   return data
 }
+
+// ── Advanced analytics ──────────────────────────────────────────────────────
+
+export async function fetchNegotiationAnalysis() {
+  const { data } = await apiClient.get('/api/analytics/contracts/negotiation-analysis')
+  return data
+}
+
+export async function fetchDepartmentAnalytics() {
+  const { data } = await apiClient.get('/api/analytics/stakeholders/departments')
+  return data
+}
+
+// ── Saved filters ───────────────────────────────────────────────────────────
+
+export async function fetchSavedFilters() {
+  const { data } = await apiClient.get('/api/filters/saved')
+  return data
+}
+
+export async function createSavedFilter(payload) {
+  const { data } = await apiClient.post('/api/filters/saved', payload)
+  return data
+}
+
+export async function deleteSavedFilter(filterId) {
+  await apiClient.delete(`/api/filters/saved/${filterId}`)
+}
+
+// ── Search ──────────────────────────────────────────────────────────────────
+
+export async function globalSearch(query, type = 'all') {
+  const { data } = await apiClient.get('/api/search', { params: { q: query, type } })
+  return data
+}
