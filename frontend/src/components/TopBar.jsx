@@ -1,3 +1,4 @@
+import ThemeToggle from './dashboard/ThemeToggle'
 import { useAuth } from '../hooks/useAuth'
 import Button from './ui/Button'
 
@@ -10,9 +11,12 @@ export default function TopBar() {
         <p className="text-sm text-white/60">Welcome back</p>
         <h1 className="text-xl font-bold">{user?.username || 'Analyst'}</h1>
       </div>
-      <Button className="text-sm" onClick={logout}>
-        Logout
-      </Button>
+      <div className="flex items-center gap-3">
+        <ThemeToggle />
+        <Button className="text-sm" onClick={logout}>
+          Logout
+        </Button>
+      </div>
     </header>
   )
 }

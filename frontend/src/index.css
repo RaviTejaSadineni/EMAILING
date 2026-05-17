@@ -4,21 +4,44 @@
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --theme-bg: #0a0e27;
+  --theme-bgSecondary: #111638;
+  --theme-surface: rgba(255,255,255,0.08);
+  --theme-border: rgba(255,255,255,0.15);
+  --theme-text: #ffffff;
+  --theme-textSecondary: rgba(255,255,255,0.7);
+  --theme-textMuted: rgba(255,255,255,0.5);
+  --theme-accent: #667eea;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+  color: var(--theme-text);
   background: radial-gradient(circle at top right, #667eea22, transparent 55%),
-    radial-gradient(circle at bottom left, #764ba233, transparent 50%), #0a0e27;
+    radial-gradient(circle at bottom left, #764ba233, transparent 50%), var(--theme-bg);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+[data-theme='light'] body,
+[data-theme='light'] {
+  background: radial-gradient(circle at top right, #667eea11, transparent 55%),
+    radial-gradient(circle at bottom left, #764ba218, transparent 50%), #f0f2f5;
+  color: #1a1a2e;
 }
 
 .glass {
   @apply bg-white/10 backdrop-blur-xl border border-white/20 shadow-glass;
 }
 
+[data-theme='light'] .glass {
+  @apply bg-white/80 border-black/10;
+}
+
 .card-3d {
   @apply transition-transform duration-300 hover:-translate-y-1 hover:scale-[1.01] shadow-card3d;
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
 .glow {

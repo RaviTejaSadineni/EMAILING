@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
 import ProtectedRoute from './components/ProtectedRoute'
+import Analytics from './pages/Analytics'
 import Dashboard from './pages/Dashboard'
 import ImportPage from './pages/Import'
 import Login from './pages/Login'
@@ -79,7 +80,7 @@ export default function App() {
         element={
           <ProtectedRoute>
             <Layout>
-              <PlaceholderPage title="Analytics" />
+              <Analytics />
             </Layout>
           </ProtectedRoute>
         }
