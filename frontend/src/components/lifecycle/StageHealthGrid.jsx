@@ -24,6 +24,7 @@ export default function StageHealthGrid({ stageHealth }) {
       <div className="space-y-3">
         {items.map((item, i) => {
           const total = item.contract_count || 1
+          // white_count = on-track contracts (from backend StageHealthItem schema)
           const greenPct = (item.white_count / total) * 100
           const yellowPct = (item.yellow_count / total) * 100
           const redPct = (item.red_count / total) * 100

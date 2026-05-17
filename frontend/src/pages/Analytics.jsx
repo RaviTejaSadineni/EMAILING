@@ -4,8 +4,7 @@ import StagePipeline from '../components/lifecycle/StagePipeline'
 import StageHealthGrid from '../components/lifecycle/StageHealthGrid'
 import VelocityChart from '../components/lifecycle/VelocityChart'
 import Loading from '../components/ui/Loading'
-import { useContractAnalytics } from '../hooks/useDashboardData'
-import { useDashboardData } from '../hooks/useDashboardData'
+import { useContractAnalytics, useDashboardData } from '../hooks/useDashboardData'
 
 export default function Analytics() {
   const { stageDistribution, loading: dashLoading } = useDashboardData()
