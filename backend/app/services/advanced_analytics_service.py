@@ -610,7 +610,8 @@ async def get_what_if_analysis(db: AsyncSession, contract_id: UUID, scenario: st
 async def detect_anomalies(db: AsyncSession) -> AnomalyList:
     anomalies: list[Anomaly] = []
     now = datetime.now(UTC)
-    yellow_mins = settings.slr_yellow_minutes * 10  # Much longer = anomaly
+    # Anomaly threshold: 10x the SLR yellow threshold (both in minutes)
+    anomaly_threshold_mins = settings.slr_yellow_minutes * 10
 
     contracts = list((await db.execute(select(Contract))).scalars().all())
     for contract in contracts:
@@ -620,7 +621,7 @@ async def detect_anomalies(db: AsyncSession) -> AnomalyList:
             exited = _parse_dt(history[i + 1].get("date")) if i + 1 < len(history) else now
             if entered and exited:
                 mins = (exited - entered).total_seconds() / 60
-                if mins > yellow_mins * 60:  # yellow_mins already in minutes
+                if mins > anomaly_threshold_mins:
                     anomalies.append(
                         Anomaly(
                             anomaly_type="long_stage_duration",

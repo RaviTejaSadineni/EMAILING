@@ -13,7 +13,7 @@ _MISSING = object()
 
 def _make_key(prefix: str, *args: Any, **kwargs: Any) -> str:
     raw = json.dumps({"args": args, "kwargs": kwargs}, sort_keys=True, default=str)
-    digest = hashlib.md5(raw.encode()).hexdigest()  # noqa: S324
+    digest = hashlib.sha256(raw.encode()).hexdigest()
     return f"analytics:{prefix}:{digest}"
 
 
