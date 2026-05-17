@@ -7,7 +7,7 @@ import Emails from './pages/Emails'
 import EmailThreadDetail from './pages/EmailThreadDetail'
 import ImportPage from './pages/Import'
 import Login from './pages/Login'
-import PlaceholderPage from './pages/Placeholder'
+import Contracts from './pages/Contracts'
 import ProcessingPage from './pages/Processing'
 import Register from './pages/Register'
 import StakeholderComparison from './pages/StakeholderComparison'
@@ -32,7 +32,7 @@ export default function App() {
       <Route path={ROUTES.DASHBOARD} element={<ProtectedLayout><Dashboard /></ProtectedLayout>} />
       <Route path={ROUTES.IMPORT} element={<ProtectedLayout><ImportPage /></ProtectedLayout>} />
       <Route path={ROUTES.PROCESSING} element={<ProtectedLayout><ProcessingPage /></ProtectedLayout>} />
-      <Route path={ROUTES.CONTRACTS} element={<ProtectedLayout><PlaceholderPage title="Contracts" /></ProtectedLayout>} />
+      <Route path={ROUTES.CONTRACTS} element={<ProtectedLayout><Contracts /></ProtectedLayout>} />
       <Route path={ROUTES.STAKEHOLDER_COMPARISON} element={<ProtectedLayout><StakeholderComparison /></ProtectedLayout>} />
       <Route path={ROUTES.STAKEHOLDER_NETWORK} element={<ProtectedLayout><StakeholderNetwork /></ProtectedLayout>} />
       <Route path={ROUTES.STAKEHOLDER_PROFILE} element={<ProtectedLayout><StakeholderProfile /></ProtectedLayout>} />
