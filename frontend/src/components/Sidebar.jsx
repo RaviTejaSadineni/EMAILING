@@ -4,6 +4,11 @@ import { ROUTES } from '../utils/constants'
 const navItems = [
   { label: 'Dashboard', to: ROUTES.DASHBOARD, icon: '📊' },
   { label: 'Import', to: ROUTES.IMPORT, icon: '📥' },
+  { label: 'Processing', to: ROUTES.PROCESSING, icon: '🧠' },
+  { label: 'Contracts', to: ROUTES.CONTRACTS, icon: '📄' },
+  { label: 'Stakeholders', to: ROUTES.STAKEHOLDERS, icon: '👥' },
+  { label: 'Emails', to: ROUTES.EMAILS, icon: '📨' },
+  { label: 'Analytics', to: ROUTES.ANALYTICS, icon: '📈' },
 ]
 
 export default function Sidebar() {

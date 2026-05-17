@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_settings
 from app.redis_client import close_redis_client, get_redis_client
-from app.routers import auth, health, imports, ws
+from app.routers import auth, classification, contracts, health, imports, lifecycle, stakeholders, threads, ws
 
 settings = get_settings()
 
@@ -35,3 +35,8 @@ app.include_router(health.router)
 app.include_router(auth.router)
 app.include_router(imports.router)
 app.include_router(ws.router)
+app.include_router(classification.router)
+app.include_router(threads.router)
+app.include_router(contracts.router)
+app.include_router(stakeholders.router)
+app.include_router(lifecycle.router)
