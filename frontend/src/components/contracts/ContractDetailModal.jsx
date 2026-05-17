@@ -94,7 +94,7 @@ export default function ContractDetailModal({ contractId, open, onClose }) {
               <div className="space-y-2">
                 {detail.delay_reasons.map((reason, i) => (
                   <div key={i} className="rounded-lg bg-red-500/10 p-3">
-                    <p className="text-sm text-red-300">{reason.reason || reason.description || JSON.stringify(reason)}</p>
+                    <p className="text-sm text-red-300">{reason.reason || reason.description || 'Delay recorded'}</p>
                   </div>
                 ))}
               </div>
