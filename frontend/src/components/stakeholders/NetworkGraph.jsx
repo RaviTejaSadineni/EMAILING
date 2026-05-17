@@ -18,6 +18,7 @@ function getDeptColor(dept) {
 export default function NetworkGraph({ network }) {
   const canvasRef = useRef(null)
   const [hoveredNode, setHoveredNode] = useState(null)
+  const hoveredNodeRef = useRef(null)
   const nodesRef = useRef([])
   const edgesRef = useRef([])
   const animRef = useRef(null)
@@ -123,7 +124,7 @@ export default function NetworkGraph({ network }) {
       // Draw nodes
       for (const n of nodes) {
         const color = getDeptColor(n.department)
-        const isHovered = hoveredNode === n.stakeholder_id
+        const isHovered = hoveredNodeRef.current === n.stakeholder_id
 
         ctx.beginPath()
         ctx.arc(n.x, n.y, n.radius * (isHovered ? 1.3 : 1), 0, Math.PI * 2)
@@ -159,6 +160,7 @@ export default function NetworkGraph({ network }) {
           break
         }
       }
+      hoveredNodeRef.current = found
       setHoveredNode(found)
       canvas.style.cursor = found ? 'pointer' : 'default'
       draw()

@@ -115,5 +115,10 @@ export function useEmailSearch() {
     }
   }, [])
 
-  return { results, loading, error, search }
+  const clear = useCallback(() => {
+    setResults(null)
+    setError(null)
+  }, [])
+
+  return { results, loading, error, search, clear }
 }

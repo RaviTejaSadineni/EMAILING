@@ -21,7 +21,7 @@ export default function Emails() {
 
   const { threads, total, stats: threadStats, loading: threadsLoading, error: threadsError } = useThreads(threadPage)
   const { results: classResults, stats: classStats, loading: classLoading, error: classError } = useClassification(classFilters)
-  const { results: searchResults, loading: searchLoading, search } = useEmailSearch()
+  const { results: searchResults, loading: searchLoading, search, clear: clearSearch } = useEmailSearch()
 
   return (
     <div className="space-y-6">
@@ -65,7 +65,7 @@ export default function Emails() {
               Search Results ({searchResults.total || 0})
             </p>
             <button
-              onClick={() => window.location.reload()}
+              onClick={clearSearch}
               className="text-xs text-white/40 hover:text-white/60"
             >
               Clear
