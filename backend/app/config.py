@@ -9,7 +9,7 @@ class Settings(BaseSettings):
 
     app_name: str = "DMS Email Monitor"
     debug: bool = False
-    secret_key: str = Field(default="change-me", min_length=8)
+    secret_key: str = Field(..., min_length=32)
     allowed_origins: list[str] = ["http://localhost:5173", "http://localhost:3000"]
 
     database_url: str = "postgresql+asyncpg://postgres:app@localhost:5432/email_dig"

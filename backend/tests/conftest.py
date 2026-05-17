@@ -1,9 +1,12 @@
 from collections.abc import AsyncGenerator
+import os
 
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import StaticPool
+
+os.environ.setdefault("SECRET_KEY", "test-secret-key-32-characters-minimum!!")
 
 from app.database import Base
 from app.dependencies import get_db_session, get_redis

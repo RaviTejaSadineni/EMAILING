@@ -9,8 +9,8 @@ export function useWebSocket(jobId) {
       return
     }
 
-    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws'
-    wsRef.current = new WebSocket(`${protocol}://localhost:8000/ws/progress/${jobId}`)
+    const wsProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws'
+    wsRef.current = new WebSocket(`${wsProtocol}://${window.location.host}/ws/progress/${jobId}`)
     wsRef.current.onmessage = (event) => setLastMessage(event.data)
 
     return () => {
