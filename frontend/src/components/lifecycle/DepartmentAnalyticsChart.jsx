@@ -1,7 +1,5 @@
 import { motion } from 'framer-motion'
 
-const COLORS = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#f43f5e', '#d946ef', '#a855f7']
-
 export default function DepartmentAnalyticsChart({ data, onDrillDown }) {
   const items = data?.items || []
 
@@ -42,8 +40,6 @@ export default function DepartmentAnalyticsChart({ data, onDrillDown }) {
         {items.map((dept, i) => {
           const throughputPct = ((dept.contract_throughput || 0) / maxThroughput) * 100
           const responsePct = ((dept.avg_response_time_hours || 0) / maxResponse) * 100
-          const color = COLORS[i % COLORS.length]
-
           return (
             <motion.div
               key={dept.department}

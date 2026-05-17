@@ -102,21 +102,6 @@ export function useAnalyticsFilters() {
     setSavedPresets((prev) => prev.filter((p) => p.id !== id))
   }, [])
 
-  // ── derived helpers for data filtering ──
-  const matches = useCallback(
-    (item) => {
-      if (filters.search) {
-        const q = filters.search.toLowerCase()
-        const text = JSON.stringify(item).toLowerCase()
-        if (!text.includes(q)) return false
-      }
-      if (filters.department && item.department && item.department !== filters.department) return false
-      if (filters.stage && item.stage && item.stage !== filters.stage) return false
-      return true
-    },
-    [filters],
-  )
-
   return {
     filters,
     updateFilter,
@@ -126,6 +111,5 @@ export function useAnalyticsFilters() {
     applyPreset,
     saveCurrentAsPreset,
     deletePreset,
-    matches,
   }
 }
