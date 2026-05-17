@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { API_BASE_URL } from '../utils/constants'
 
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+const ALLOWED_HOSTNAMES = new Set([window.location.hostname, 'localhost', '127.0.0.1'])
+
 export function useProcessingProgress(fetchStatus, initialStatus = null) {
   const [status, setStatus] = useState(initialStatus)
   const wsRef = useRef(null)
@@ -15,8 +18,8 @@ export function useProcessingProgress(fetchStatus, initialStatus = null) {
         if (!cancelled) {
           setStatus(data)
         }
-      } catch {
-        // ignore transient polling errors
+      } catch (error) {
+        console.warn('Processing status polling failed', error)
       }
     }
 
@@ -36,7 +39,15 @@ export function useProcessingProgress(fetchStatus, initialStatus = null) {
     if (!status?.job_id) {
       return
     }
+    if (!UUID_REGEX.test(status.job_id)) {
+      console.warn('Skipping WebSocket connection due to invalid job_id')
+      return
+    }
     const baseUrl = new URL(API_BASE_URL)
+    if (!ALLOWED_HOSTNAMES.has(baseUrl.hostname)) {
+      console.warn('Skipping WebSocket connection due to disallowed API host', baseUrl.hostname)
+      return
+    }
     const protocol = baseUrl.protocol === 'https:' ? 'wss:' : 'ws:'
     const ws = new WebSocket(`${protocol}//${baseUrl.host}/ws/progress/${status.job_id}`)
     wsRef.current = ws
@@ -44,8 +55,8 @@ export function useProcessingProgress(fetchStatus, initialStatus = null) {
       try {
         const payload = JSON.parse(event.data)
         setStatus((prev) => ({ ...prev, ...payload }))
-      } catch {
-        // ignore malformed payload
+      } catch (error) {
+        console.warn('Malformed processing WebSocket payload', error)
       }
     }
     return () => ws.close()

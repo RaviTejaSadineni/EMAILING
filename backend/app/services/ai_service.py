@@ -112,8 +112,6 @@ class AIService:
                 await asyncio.sleep(delay + random.uniform(0.0, 0.2))
                 delay *= 2
 
-        raise RuntimeError("unreachable")
-
     async def complete(
         self,
         system_prompt: str,

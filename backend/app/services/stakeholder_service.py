@@ -17,6 +17,10 @@ from app.services.ai_service import get_ai_service
 from app.services.processing_job_service import mark_completed, mark_failed, mark_progress, mark_running
 
 _tasks: dict[UUID, asyncio.Task] = {}
+INTERNAL_DEFAULT_DEPARTMENT = "Legal"
+EXTERNAL_DEPARTMENT = "External"
+EXTERNAL_DEFAULT_ROLE = "External Client"
+INTERNAL_DEFAULT_ROLE = "Manager"
 
 
 def _domain(address: str) -> str:
@@ -63,8 +67,12 @@ async def run_stakeholder_extraction_job(job_id: UUID, session_factory: async_se
 
                 stakeholder = existing or Stakeholder(email_address=address)
                 stakeholder.name = ai_item.get("name") or parseaddr(address)[0] or None
-                stakeholder.department = ai_item.get("department") or ("External" if _domain(address) != internal_domain else "Legal")
-                stakeholder.role = ai_item.get("role") or ("External Client" if stakeholder.department == "External" else "Manager")
+                stakeholder.department = ai_item.get("department") or (
+                    EXTERNAL_DEPARTMENT if _domain(address) != internal_domain else INTERNAL_DEFAULT_DEPARTMENT
+                )
+                stakeholder.role = ai_item.get("role") or (
+                    EXTERNAL_DEFAULT_ROLE if stakeholder.department == EXTERNAL_DEPARTMENT else INTERNAL_DEFAULT_ROLE
+                )
                 stakeholder.is_internal = bool(ai_item.get("is_internal", _domain(address) == internal_domain))
                 stakeholder.total_emails = total
                 stakeholder.total_contracts = int(

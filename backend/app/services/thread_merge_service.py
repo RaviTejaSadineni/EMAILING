@@ -118,6 +118,7 @@ async def run_thread_merge_job(job_id: UUID, session_factory: async_sessionmaker
                     }
                 )
                 dates = [item.date for item in group if item.date]
+                confidence = 0.7 if len(group) == 1 else min(0.99, 0.75 + min(len(group), 10) * 0.02)
                 thread = EmailThread(
                     thread_subject=subject,
                     merged_subject=normalize_subject(subject),
@@ -125,7 +126,7 @@ async def run_thread_merge_job(job_id: UUID, session_factory: async_sessionmaker
                     email_count=len(group),
                     first_date=min(dates) if dates else None,
                     last_date=max(dates) if dates else None,
-                    ai_confidence=0.8,
+                    ai_confidence=round(confidence, 4),
                 )
                 db.add(thread)
                 await db.flush()
